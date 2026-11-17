@@ -13,7 +13,6 @@ const clearDrawingsToolbarConfig = {
           hint: "Remove all pen and highlighter drawings",
           lockInViewMode: true,
           icons: "resources/%theme-type%(light|dark)/icon%scale%(default).%extension%(svg)",
-          items: [],
         },
       ],
     },
