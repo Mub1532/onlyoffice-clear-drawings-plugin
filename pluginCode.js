@@ -1,7 +1,6 @@
 const clearDrawingsButtonId = "clearDrawings";
 
 const clearDrawingsToolbarConfig = {
-  guid: window.Asc.plugin.guid,
   tabs: [
     {
       id: "draw",
@@ -26,18 +25,34 @@ function deleteNonImageDrawings() {
   const drawings = Api.GetDocument().GetAllDrawingObjects();
 
   for (const drawing of drawings) {
-    if (drawing.GetClassType() === "image") continue;
-    drawing.Delete();
+    try {
+      if (drawing.GetClassType() === "image") continue;
+      drawing.Delete();
+    } catch {}
   }
 }
 
 function addClearDrawingsButton() {
-  window.Asc.plugin.executeMethod("AddToolbarMenuItem", [clearDrawingsToolbarConfig]);
+  // guid only exists once init runs
+  const { guid } = window.Asc.plugin;
+  if (!guid) return;
+
+  const toolbarItem = { ...clearDrawingsToolbarConfig, guid };
+  try {
+    window.Asc.plugin.executeMethod("AddToolbarMenuItem", [toolbarItem]);
+  } catch (error) {
+    console.error("couldnt add clear drawings button", error);
+  }
 }
 
 function clearDrawings(buttonId) {
   if (buttonId !== clearDrawingsButtonId) return;
-  window.Asc.plugin.callCommand(deleteNonImageDrawings, false, true);
+
+  try {
+    window.Asc.plugin.callCommand(deleteNonImageDrawings, false, true);
+  } catch (error) {
+    console.error("couldnt clear drawings", error);
+  }
 }
 
 window.Asc.plugin.init = addClearDrawingsButton;
