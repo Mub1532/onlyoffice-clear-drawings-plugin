@@ -1,9 +1,8 @@
 name: release
 
 on:
-  push:
-    tags:
-      - "v*"
+  release:
+    types: [published]
 
 permissions:
   contents: write
@@ -20,7 +19,7 @@ jobs:
           cp -r config.json index.html pluginCode.js resources clear-drawings/
           zip -r clear-drawings.zip clear-drawings
 
-      - name: create release
+      - name: attach zip to release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" clear-drawings.zip --generate-notes
+        run: gh release upload "$GITHUB_REF_NAME" clear-drawings.zip --clobber
