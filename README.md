@@ -13,7 +13,7 @@ Removes every pen / highlighter drawing in the document.
 - Also a dropdown to clear either only highlighted or pen annotations
 
 Notes:
-- Plugin Tested on Only Office 10.
+- Plugin Tested on Only Office 10. Works will all types, Word, Powerpoint, Excel etc or equivalents eg odt, etc.
 - Drawing based highlight and actual in the document highlighting is different, this plugin is for drawing based.
 
 ## Screenshots
